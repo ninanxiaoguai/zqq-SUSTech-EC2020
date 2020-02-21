@@ -1,13 +1,13 @@
 clc,clear
 nbGen = 0; % generation counter
 bestSoFarSolution = NaN; % best-so-far solution
-N = 10;            % number of individual
+N = 4;            % number of individual
 D = 5;            % the length of binary
 T = 100;         % max gen
 Pop = randi([0,1],N,D);   % Initialise a population
-Pop = ones(N,D);
+Pop = ones(N,D);          % a diffucult situation
 cal_mat = ones(1,D);
-for i = (D-1):-1:1
+for i = (D-1):-1:1        % calculate fitness
     cal_mat(i) = cal_mat(i+1)*2;
 end
 fitness = objFunc(Pop,cal_mat);  % Evaluate the initial population
@@ -17,7 +17,7 @@ record = ones(2,T);
 while (nbGen<T) 
     fitness = objFunc(Pop,cal_mat);               % Evaluate the initial population
     index = RouletteWheelSelection(N,fitness);    % Roulette Wheel Selection
-    Pop = reproduction(Pop(index,:),0.9,0.01);    % crossover mutation
+    Pop = reproduction(Pop(index,:),0.5,0.01);    % crossover mutation
     nbGen = nbGen + 1;
     bestSoFarFit = min(bestSoFarFit,min(objFunc(Pop,cal_mat)));
     record(:,nbGen) = [min(objFunc(Pop,cal_mat));bestSoFarFit];

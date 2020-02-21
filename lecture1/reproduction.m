@@ -5,8 +5,8 @@ function Offspring = reproduction(Parent,proc,prom)
     [N,D]   = size(Parent1);
     %% crossover
 %     k = repmat(1:D,N,1) > repmat(randi(D,N,1),1,D);
-    k = repmat(1:D,N,1) > (randi(D-2,3,1)+1);
-    k(repmat(rand(N,1)>proc,1,D)) = false;
+    k = repmat(1:D,N,1) > (randi(D-2,N,1)+1);
+    k(repmat(rand(N,1)<proc,1,D)) = false;
     Offspring1    = Parent1;
     Offspring2    = Parent2;
     Offspring1(k) = Parent2(k);
@@ -14,7 +14,9 @@ function Offspring = reproduction(Parent,proc,prom)
     Offspring     = [Offspring1;Offspring2];
   
     %% mutation
-    Site = rand(2*N,D) < prom/D;
+    Site = repmat(1:D,2*N,1) == randi(D,2*N,1);
+    Site(repmat(rand(2*N,1)<prom,1,D)) = false;
+%     Site = rand(2*N,D) < prom/D;
     Offspring(Site) = ~Offspring(Site);
 end
 
