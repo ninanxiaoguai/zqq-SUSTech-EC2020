@@ -1,0 +1,9 @@
+clc,clear
+record_all = zeros(2,500);
+for i = 1:1
+    [record]=simpleEA(30,30,500);
+    record_all = record;
+end
+plot(1:size(record_all,2),(record_all())/30)
+xlabel('generation')
+ylabel('value of function')
